@@ -125,98 +125,89 @@
 
 ---
 
-## 🎮 Doodle — self-playing mini-game (SVG only)
-> This is a tiny, animated SVG "doodle" that keeps playing automatically using SMIL: a jumper that hops between moving platforms. Works in GitHub README without JS.
+<!-- Doodle — self-playing mini-game SVG (paste directly into README.md) -->
+<svg width="420" height="240" viewBox="0 0 420 240" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Doodle game">
+  <defs>
+    <style type="text/css"><![CDATA[
+      .bg { fill:#eaf6ff; }
+      .platform { fill:#0ea5e9; rx:6; }
+      .player { fill:#ff7a59; stroke:#c04b2e; stroke-width:1.5; rx:6; }
+      .cloud { fill:#ffffff; opacity:0.9; }
+    ]]></style>
+  </defs>
 
-<p align="center">
-  <svg width="420" height="240" viewBox="0 0 420 240" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Doodle game">
-    <defs>
-      <style>
-        .bg { fill:#eaf6ff; }
-        .platform { fill:#0ea5e9; rx:6; }
-        .player { fill:#ff7a59; stroke:#c04b2e; stroke-width:1.5; rx:6; }
-        .cloud { fill:#ffffff; opacity:0.9; }
-      </style>
-    </defs>
+  <!-- background -->
+  <rect width="420" height="240" class="bg"/>
 
-    <!-- background -->
-    <rect width="420" height="240" class="bg"/>
+  <!-- clouds drifting (decorative) -->
+  <g transform="translate(-60,18)">
+    <ellipse class="cloud" cx="60" cy="18" rx="28" ry="12">
+      <animateTransform attributeName="transform" attributeType="XML" type="translate" from="-10 0" to="380 0" dur="12s" repeatCount="indefinite"/>
+    </ellipse>
+    <ellipse class="cloud" cx="180" cy="10" rx="36" ry="14">
+      <animateTransform attributeName="transform" attributeType="XML" type="translate" from="-20 0" to="360 0" dur="16s" repeatCount="indefinite"/>
+    </ellipse>
+  </g>
 
-    <!-- clouds drifting (decorative) -->
-    <g transform="translate(-60,18)">
-      <ellipse class="cloud" cx="60" cy="18" rx="28" ry="12">
-        <animateTransform attributeName="transform" attributeType="XML" type="translate" from="-10 0" to="380 0" dur="12s" repeatCount="indefinite"/>
-      </ellipse>
-      <ellipse class="cloud" cx="180" cy="10" rx="36" ry="14">
-        <animateTransform attributeName="transform" attributeType="XML" type="translate" from="-20 0" to="360 0" dur="16s" repeatCount="indefinite"/>
-      </ellipse>
-    </g>
+  <!-- ground -->
+  <rect x="0" y="220" width="420" height="20" fill="#c6f6ff"/>
 
-    <!-- ground -->
-    <rect x="0" y="220" width="420" height="20" fill="#c6f6ff"/>
+  <!-- PLATFORM GROUP: We animate the platforms horizontally to simulate scrolling -->
+  <g id="platforms">
+    <rect x="-40" y="170" width="120" height="14" class="platform">
+      <animateTransform attributeName="transform" attributeType="XML" type="translate" from="-40 0" to="460 0" dur="5.6s" repeatCount="indefinite"/>
+    </rect>
 
-    <!-- PLATFORM GROUP: We animate the platforms horizontally to simulate scrolling -->
-    <!-- Platform A (left -> right) -->
-    <g id="platforms">
-      <rect x="-40" y="170" width="120" height="14" class="platform">
-        <animateTransform attributeName="transform" attributeType="XML" type="translate" from="-40 0" to="460 0" dur="5.6s" repeatCount="indefinite"/>
-      </rect>
+    <!-- Platform B -->
+    <rect x="120" y="130" width="110" height="14" class="platform">
+      <animateTransform attributeName="transform" attributeType="XML" type="translate" from="-40 0" to="460 0" dur="4.2s" repeatCount="indefinite"/>
+    </rect>
 
-      <!-- Platform B -->
-      <rect x="120" y="130" width="110" height="14" class="platform">
-        <animateTransform attributeName="transform" attributeType="XML" type="translate" from="-40 0" to="460 0" dur="4.2s" repeatCount="indefinite"/>
-      </rect>
+    <!-- Platform C (higher) -->
+    <rect x="280" y="90" width="100" height="14" class="platform">
+      <animateTransform attributeName="transform" attributeType="XML" type="translate" from="-40 0" to="460 0" dur="6.4s" repeatCount="indefinite"/>
+    </rect>
+  </g>
 
-      <!-- Platform C (higher) -->
-      <rect x="280" y="90" width="100" height="14" class="platform">
-        <animateTransform attributeName="transform" attributeType="XML" type="translate" from="-40 0" to="460 0" dur="6.4s" repeatCount="indefinite"/>
-      </rect>
-    </g>
+  <!-- PLAYER: small rounded rect that "jumps" repeatedly -->
+  <g id="player" transform="translate(60,150)">
+    <rect class="player" x="-12" y="-22" width="24" height="24" rx="4" />
+    <!-- eyes -->
+    <circle cx="-6" cy="-12" r="1.6" fill="#4b2b1a"/>
+    <circle cx="2" cy="-12" r="1.6" fill="#4b2b1a"/>
 
-    <!-- PLAYER: small rounded rect that "jumps" repeatedly -->
-    <g id="player" transform="translate(60,150)">
-      <rect class="player" x="-12" y="-22" width="24" height="24" rx="4" />
-      <!-- eyes -->
-      <circle cx="-6" cy="-12" r="1.6" fill="#4b2b1a"/>
-      <circle cx="2" cy="-12" r="1.6" fill="#4b2b1a"/>
+    <!-- Jump animation (y translation) that repeats and syncs to platforms passing -->
+    <animateTransform attributeName="transform"
+                      attributeType="XML"
+                      type="translate"
+                      dur="1.4s"
+                      keyTimes="0;0.25;0.5;0.75;1"
+                      values="60,150; 60,95; 60,130; 60,102; 60,150"
+                      repeatCount="indefinite"/>
+    <!-- tiny tilt on landing -->
+    <animateTransform attributeName="transform"
+                      attributeType="XML"
+                      type="rotate"
+                      dur="1.4s"
+                      keyTimes="0;0.25;0.4;0.6;1"
+                      values="0 60 150; -10 60 95; 3 60 130; -6 60 102; 0 60 150"
+                      additive="sum"
+                      repeatCount="indefinite"/>
+  </g>
 
-      <!-- Jump animation (y translation) that repeats and syncs to platforms passing -->
-      <animateTransform attributeName="transform"
-                        attributeType="XML"
-                        type="translate"
-                        dur="1.4s"
-                        keyTimes="0;0.25;0.5;0.75;1"
-                        values="60,150; 60,95; 60,130; 60,102; 60,150"
-                        repeatCount="indefinite"/>
-      <!-- tiny tilt on landing -->
-      <animateTransform attributeName="transform"
-                        attributeType="XML"
-                        type="rotate"
-                        dur="1.4s"
-                        keyTimes="0;0.25;0.4;0.6;1"
-                        values="0 60 150; -10 60 95; 3 60 130; -6 60 102; 0 60 150"
-                        additive="sum"
-                        repeatCount="indefinite"/>
-    </g>
+  <!-- Scoreboard like counter (decorative; increases visually) -->
+  <g transform="translate(300,18)">
+    <rect x="0" y="0" width="96" height="36" rx="6" fill="#ffffff" stroke="#dbeafe"/>
+    <text x="48" y="22" font-size="14" font-weight="700" fill="#0f1724" text-anchor="middle">Score</text>
+    <text x="48" y="34" font-size="12" fill="#2563eb" text-anchor="middle">
+      <tspan>
+        <animate id="count" attributeName="opacity" values="1;0.6;1" dur="1s" repeatCount="indefinite"/>
+      </tspan>
+      0
+    </text>
+  </g>
+</svg>
 
-    <!-- Scoreboard like counter (decorative; increases visually) -->
-    <g transform="translate(300,18)">
-      <rect x="0" y="0" width="96" height="36" rx="6" fill="#ffffff" stroke="#dbeafe"/>
-      <text x="48" y="22" font-size="14" font-weight="700" fill="#0f1724" text-anchor="middle">
-        Score
-      </text>
-      <text x="48" y="34" font-size="12" fill="#2563eb" text-anchor="middle">
-        <!-- faux-counter flicker -->
-        <tspan>
-          <animate id="count" attributeName="opacity" values="1;0.6;1" dur="1s" repeatCount="indefinite"/>
-        </tspan>
-        0
-      </text>
-    </g>
-
-    <!-- note: all animations loop forever to simulate a continuously-playing doodle -->
-  </svg>
-</p>
 
 ---
 
