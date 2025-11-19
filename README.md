@@ -73,10 +73,18 @@
 ###
 
 <picture>
-  <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/BhavyaSharan/BhavyaSharan/output/pacman-contribution-graph-dark.svg">
-  <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/BhavyaSharan/BhavyaSharan/output/pacman-contribution-graph.svg">
-  <img alt="pacman contribution graph" src="https://raw.githubusercontent.com/BhavyaSharan/BhavyaSharan/output/pacman-contribution-graph.svg">
+  <!-- dark-mode version (make sure 'main' is the correct branch name) -->
+  <source media="(prefers-color-scheme: dark)"
+          srcset="https://raw.githubusercontent.com/BhavyaSharan/BhavyaSharan/main/output/pacman-contribution-graph-dark.svg">
+  <!-- light-mode version -->
+  <source media="(prefers-color-scheme: light)"
+          srcset="https://raw.githubusercontent.com/BhavyaSharan/BhavyaSharan/main/output/pacman-contribution-graph.svg">
+  <!-- fallback (use a local uploaded image if SVG still doesn't load) -->
+  <img alt="pacman contribution graph"
+       src="/mnt/data/A_2D_digital_illustration_features_a_young_student.png"
+       style="max-width:100%;"/>
 </picture>
+
 
 ###
 
